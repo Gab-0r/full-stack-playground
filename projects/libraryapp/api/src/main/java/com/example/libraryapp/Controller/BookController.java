@@ -16,23 +16,17 @@ public class BookController {
 
     private final BookService service;
 
-
     @GetMapping("")
-    public List<Book> all(){
-        return service.findAll();
-    }
-
-    @GetMapping("/summaries")
     public List<BookSummary> findAllSummaries(){
         return service.findAllBookSummaries();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/details/{id}")
     public Book findOne(@PathVariable Long id){
         return service.findById(id);
     }
 
-    @GetMapping("/summaries/{id}")
+    @GetMapping("/{id}")
     public BookSummary findOneSummary(@PathVariable Long id){
         return service.findSummaryById(id);
     }
@@ -54,7 +48,7 @@ public class BookController {
         service.deleteById(id);
     }
 
-    @GetMapping("")
+    @GetMapping("/available")
     public List<Book> allAvailableBooks(){
         return service.findAvailableBooks();
     }
