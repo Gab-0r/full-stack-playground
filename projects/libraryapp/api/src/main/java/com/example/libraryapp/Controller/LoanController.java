@@ -19,21 +19,16 @@ public class LoanController {
     private final LoanService loanService;
 
     @GetMapping("")
-    public List<Loan> all(){
-        return loanService.findAll();
-    }
-
-    @GetMapping("/summaries")
     public List<LoanSummary> allSummaries(){
         return loanService.findAllSummaries();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/details/{id}")
     public Loan one(@PathVariable Long id){
         return loanService.findById(id);
     }
 
-    @GetMapping("/summaries/{id}")
+    @GetMapping("/{id}")
     public LoanSummary oneSummary(@PathVariable Long id){
         return loanService.findSummaryById(id);
     }
