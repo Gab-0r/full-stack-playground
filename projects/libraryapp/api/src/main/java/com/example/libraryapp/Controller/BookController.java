@@ -1,6 +1,6 @@
 package com.example.libraryapp.Controller;
 import com.example.libraryapp.DTO.Book.BookRequest;
-import com.example.libraryapp.DTO.Book.BookSummary;
+import com.example.libraryapp.DTO.Book.BookResponse;
 import com.example.libraryapp.Model.Book;
 import com.example.libraryapp.Service.BookService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ public class BookController {
     private final BookService service;
 
     @GetMapping("")
-    public List<BookSummary> findAllSummaries(){
+    public List<BookResponse> findAllSummaries(){
         return service.findAllBookSummaries();
     }
 
@@ -27,13 +27,13 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public BookSummary findOneSummary(@PathVariable Long id){
+    public BookResponse findOneSummary(@PathVariable Long id){
         return service.findSummaryById(id);
     }
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public BookSummary save(@RequestBody BookRequest bookRequest){
+    public BookResponse save(@RequestBody BookRequest bookRequest){
         return service.save(bookRequest);
     }
 

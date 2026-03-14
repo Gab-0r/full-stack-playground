@@ -1,21 +1,21 @@
 package com.example.libraryapp.DTO.Loan;
 
-import com.example.libraryapp.DTO.Book.BookSummary;
+import com.example.libraryapp.DTO.Book.BookResponse;
 import com.example.libraryapp.DTO.Member.MemberSummary;
 import com.example.libraryapp.Model.Loan;
 
 import java.time.LocalDate;
 
-public class LoanSummary {
+public class LoanResponse {
 
     private Long id;
-    private BookSummary book;
+    private BookResponse book;
     private MemberSummary member;
     private LocalDate loanDate;
     private LocalDate returnDate;
     private Boolean returned;
 
-    public LoanSummary(Loan loan, BookSummary book, MemberSummary member){
+    public LoanResponse(Loan loan, BookResponse book, MemberSummary member){
         this.setId(loan.getId());
         this.setBook(book);
         this.setMember(member);
@@ -40,11 +40,11 @@ public class LoanSummary {
         this.id = id;
     }
 
-    public BookSummary getBook() {
+    public BookResponse getBook() {
         return book;
     }
 
-    public void setBook(BookSummary book) {
+    public void setBook(BookResponse book) {
         this.book = book;
     }
 

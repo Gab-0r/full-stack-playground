@@ -1,7 +1,7 @@
 package com.example.libraryapp.Service;
 
 import com.example.libraryapp.DTO.Book.BookRequest;
-import com.example.libraryapp.DTO.Book.BookSummary;
+import com.example.libraryapp.DTO.Book.BookResponse;
 import com.example.libraryapp.Model.Book;
 import com.example.libraryapp.Repository.BookRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +20,9 @@ public class BookService {
         return repository.findAll();
     }
 
-    public List<BookSummary> findAllBookSummaries(){
+    public List<BookResponse> findAllBookSummaries(){
         return repository.findAll().stream()
-                .map(BookSummary::new)
+                .map(BookResponse::new)
                 .collect(Collectors.toList());
     }
 
@@ -31,8 +31,8 @@ public class BookService {
                 .orElseThrow(() -> new RuntimeException("Book not found"));
     }
 
-    public BookSummary findSummaryById(Long id){
-        return repository.findById(id).map(BookSummary::new)
+    public BookResponse findSummaryById(Long id){
+        return repository.findById(id).map(BookResponse::new)
                 .orElseThrow(() -> new RuntimeException("Book not found"));
     }
 
@@ -46,9 +46,9 @@ public class BookService {
         }).orElseThrow(() -> new RuntimeException("Book not found"));
     }
 
-    public BookSummary save(BookRequest bookRequest){
+    public BookResponse save(BookRequest bookRequest){
         Book book = Book.from(bookRequest);
-        return new BookSummary(repository.save(book));
+        return new BookResponse(repository.save(book));
     }
 
     public void deleteById(Long id){

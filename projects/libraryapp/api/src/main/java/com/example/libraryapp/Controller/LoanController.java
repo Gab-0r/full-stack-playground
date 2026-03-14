@@ -2,7 +2,7 @@ package com.example.libraryapp.Controller;
 
 
 import com.example.libraryapp.DTO.Loan.LoanRequest;
-import com.example.libraryapp.DTO.Loan.LoanSummary;
+import com.example.libraryapp.DTO.Loan.LoanResponse;
 import com.example.libraryapp.Model.Loan;
 import com.example.libraryapp.Service.LoanService;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +19,8 @@ public class LoanController {
     private final LoanService loanService;
 
     @GetMapping("")
-    public List<LoanSummary> allSummaries(){
-        return loanService.findAllSummaries();
+    public List<LoanResponse> allSummaries(){
+        return loanService.findAll();
     }
 
     @GetMapping("/details/{id}")
@@ -29,18 +29,18 @@ public class LoanController {
     }
 
     @GetMapping("/{id}")
-    public LoanSummary oneSummary(@PathVariable Long id){
+    public LoanResponse oneSummary(@PathVariable Long id){
         return loanService.findSummaryById(id);
     }
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public Loan save(@RequestBody LoanRequest loanRequest){
+    public LoanResponse save(@RequestBody LoanRequest loanRequest){
         return loanService.save(loanRequest);
     }
 
     @PatchMapping("/{id}")
-    public Loan update(@PathVariable Long id, @RequestBody Loan loan){
+    public LoanResponse update(@PathVariable Long id, @RequestBody Loan loan){
         return loanService.update(id, loan);
     }
 

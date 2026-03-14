@@ -1,14 +1,15 @@
 package com.example.libraryapp.Model;
 
-
 import com.example.libraryapp.DTO.Book.BookRequest;
 import jakarta.persistence.*;
+import lombok.ToString;
 
 import java.time.Year;
 import java.util.List;
 
 @Entity
 @Table(name = "books")
+@ToString
 public class Book {
 
     @Id
