@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react";
-import ListGroup from "./components/ListGroup";
+import type { Member } from "./types";
+import MembersList from "./components/MembersList";
 
 const base_url = `${import.meta.env.VITE_API_BASE_URL}`;
 
-interface Member {
-  name: string;
-  email: string;
-  membershipDate: string;
-  id: number;
-}
-
 export default function App() {
   const [items, setItems] = useState<Member[]>([]);
+
+  function getMemberLoans(memberId: number): void {
+    console.log("Fetching loans for member" + memberId);
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,11 +21,13 @@ export default function App() {
     fetchData();
   }, []);
 
-  const memberNames: string[] = items.map((member) => member.name);
-
   return (
     <div>
-      <ListGroup items={memberNames} heading="Members"></ListGroup>
+      <MembersList
+        items={items}
+        heading="Members"
+        onClickHandle={getMemberLoans}
+      ></MembersList>
     </div>
   );
 }

@@ -8,7 +8,7 @@ function ListGroup({ items, heading }: ListGroupProps) {
     return (
       <>
         <h1>{heading}</h1>
-        <h2>No members signed</h2>
+        <h2>No elements to display</h2>
       </>
     );
   }
