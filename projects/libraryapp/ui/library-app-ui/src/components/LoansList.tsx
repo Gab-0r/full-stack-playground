@@ -10,7 +10,7 @@ function LoanList({ items, heading, memberSelected }: LoanListProps) {
   if (items.length === 0) {
     return (
       <>
-        <h1>{heading}</h1>
+        <h3>{heading}</h3>
         <div>
           {memberSelected
             ? "Member selected doesn't have loans"
@@ -22,7 +22,7 @@ function LoanList({ items, heading, memberSelected }: LoanListProps) {
 
   return (
     <>
-      <h1>{heading}</h1>
+      <h3>{heading}</h3>
       <ul className="list-group">
         {items.map((loan) => (
           <li className="list-group-item" key={loan.id}>

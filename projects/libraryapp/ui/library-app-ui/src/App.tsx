@@ -1,49 +1,24 @@
-import { useEffect, useState } from "react";
-import { type Loan, type Member } from "./types";
-import MembersList from "./components/MembersList";
-import LoanList from "./components/LoansList";
-
-const base_url = `${import.meta.env.VITE_API_BASE_URL}`;
+import NavBar from "./components/NavBar";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MembersPage from "./pages/MembersPage";
+import LoansPage from "./pages/LoansPage";
+import BooksPage from "./pages/BooksPage";
 
 export default function App() {
-  const [items, setItems] = useState<Member[]>([]);
-  const [loans, setLoans] = useState<Loan[]>([]);
-  const [memberSelected, setMemberSelected] = useState(false);
-
-  const getMemberLoans = async (memberId: number): Promise<void> => {
-    const url = `${base_url}/api/loans`;
-    const response = await fetch(url);
-    const data = await response.json();
-    setMemberSelected(true);
-    setLoans(data.filter((e: Loan) => e.member.id === memberId));
-  };
-
-  useEffect(() => {
-    const fetchMembers = async () => {
-      const url = `${base_url}/api/members`;
-      const response = await fetch(url);
-      const data = await response.json();
-      setItems(data);
-    };
-    fetchMembers();
-  }, []);
-
   return (
     <>
-      <div>
-        <MembersList
-          items={items}
-          heading="Members"
-          onClickHandle={getMemberLoans}
-        ></MembersList>
-      </div>
-      <div>
-        <LoanList
-          items={loans}
-          heading="Loans per user"
-          memberSelected={memberSelected}
-        ></LoanList>
-      </div>
+      <BrowserRouter>
+        <div>
+          <NavBar></NavBar>
+        </div>
+
+        <Routes>
+          <Route path="/" element={<LoansPage />} />
+          <Route path="/members" element={<MembersPage />} />
+          <Route path="/loans" element={<LoansPage />} />
+          <Route path="/books" element={<BooksPage />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }

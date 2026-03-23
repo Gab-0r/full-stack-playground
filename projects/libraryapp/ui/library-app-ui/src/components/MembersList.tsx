@@ -21,7 +21,7 @@ function MembersList({ items, heading, onClickHandle }: MembersListProps) {
 
   return (
     <>
-      <h1>{heading}</h1>
+      <h3>{heading}</h3>
       <ul className="list-group">
         {items.map((member) => (
           <li
