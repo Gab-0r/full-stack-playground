@@ -2,18 +2,15 @@ import type { Book } from "../types";
 
 interface BooksListProps {
   items: Book[];
-  heading: string;
 }
 
-function BooksList({ items, heading }: BooksListProps) {
+function BooksList({ items }: BooksListProps) {
   if (items.length === 0) {
-    <h3 className="text-center">{heading}</h3>;
     <div className="text-center">No books to display</div>;
   }
 
   return (
     <>
-      <h3 className="text-center">{heading}</h3>
       <div className="mx-5">
         <table className="table table-hover">
           <thead className="table-dark">
