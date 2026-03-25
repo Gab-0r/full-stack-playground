@@ -24,7 +24,7 @@ function BooksList({ items }: BooksListProps) {
           </thead>
           <tbody>
             {items.map((book) => (
-              <tr>
+              <tr key={book.id}>
                 <td>{book.id}</td>
                 <td>{book.title}</td>
                 <td>{book.author}</td>
