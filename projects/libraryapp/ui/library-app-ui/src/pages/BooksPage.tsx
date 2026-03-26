@@ -4,6 +4,7 @@ import type { Book } from "../types";
 import Button from "../components/Button";
 import NewBookModal from "../components/NewBookModal";
 import Alert from "../components/Alert";
+import EditBookModal from "../components/EditBookModal";
 
 const base_url = `${import.meta.env.VITE_API_BASE_URL}`;
 
@@ -13,6 +14,7 @@ function BooksPage() {
   const [showCreatedBookAlert, setShowCreatedBookAlert] = useState(false);
   const [showErrorBookAlert, setShowErrordBookAlert] = useState(false);
   const [selectedBooks, setSelectedBooks] = useState<number[]>([]);
+  const [showEditBookModal, setShowEditBookModal] = useState(false);
 
   const newBookHandle = (): void => {
     setShowNewBookModal(true);
@@ -50,7 +52,13 @@ function BooksPage() {
         }),
       ),
     );
+    setSelectedBooks([]);
     fetchBooks();
+  };
+
+  const editBookHandle = (): void => {
+    setShowEditBookModal(true);
+    console.log("showing modal " + showEditBookModal);
   };
 
   const onBookSelect = (checked: boolean, bookId: number): void => {
@@ -94,6 +102,15 @@ function BooksPage() {
         <Button onClick={newBookHandle} color="primary">
           New Book
         </Button>
+
+        <Button
+          onClick={editBookHandle}
+          color="primary"
+          enable={selectedBooks.length != 1 ? "disabled" : ""}
+        >
+          Edit Book
+        </Button>
+
         <Button
           onClick={() => deleteBookHandle(selectedBooks)}
           color="danger"
@@ -110,6 +127,11 @@ function BooksPage() {
           show={showNewBookModal}
           onClose={() => setShowNewBookModal(false)}
           onSave={onSave}
+        />
+        <EditBookModal
+          show={showEditBookModal}
+          onClose={() => setShowEditBookModal(false)}
+          onSave={() => console.log("saving...")}
         />
       </div>
     </>

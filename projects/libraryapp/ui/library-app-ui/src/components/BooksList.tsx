@@ -40,7 +40,7 @@ function BooksList({ items, selectedIds, onBookSelect }: BooksListProps) {
                 <td>{book.id}</td>
                 <td>{book.title}</td>
                 <td>{book.author}</td>
-                <td>{book.isb}</td>
+                <td>{book.isbn}</td>
                 <td>{book.publicationYear}</td>
               </tr>
             ))}
