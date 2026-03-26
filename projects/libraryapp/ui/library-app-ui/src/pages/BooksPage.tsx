@@ -12,6 +12,7 @@ function BooksPage() {
   const [showNewBookModal, setShowNewBookModal] = useState(false);
   const [showCreatedBookAlert, setShowCreatedBookAlert] = useState(false);
   const [showErrorBookAlert, setShowErrordBookAlert] = useState(false);
+  const [selectedBooks, setSelectedBooks] = useState<number[]>([]);
 
   const newBookHandle = (): void => {
     setShowNewBookModal(true);
@@ -39,6 +40,27 @@ function BooksPage() {
     } else {
       setShowErrordBookAlert(true);
     }
+  };
+
+  const deleteBookHandle = async (selectedBooks: number[]): Promise<void> => {
+    await Promise.all(
+      selectedBooks.map((id) =>
+        fetch(`${base_url}/api/books/${id}`, {
+          method: "DELETE",
+        }),
+      ),
+    );
+    fetchBooks();
+  };
+
+  const onBookSelect = (checked: boolean, bookId: number): void => {
+    let ids = [];
+    if (checked) {
+      ids = [...selectedBooks, bookId];
+    } else {
+      ids = [...selectedBooks].filter((item) => item !== bookId);
+    }
+    setSelectedBooks(ids);
   };
 
   const alertOnClose = (): void => {
@@ -72,7 +94,18 @@ function BooksPage() {
         <Button onClick={newBookHandle} color="primary">
           New Book
         </Button>
-        <BooksList items={items} />
+        <Button
+          onClick={() => deleteBookHandle(selectedBooks)}
+          color="danger"
+          enable={selectedBooks.length === 0 ? "disabled" : ""}
+        >
+          Delete Book
+        </Button>
+        <BooksList
+          items={items}
+          selectedIds={selectedBooks}
+          onBookSelect={onBookSelect}
+        />
         <NewBookModal
           show={showNewBookModal}
           onClose={() => setShowNewBookModal(false)}

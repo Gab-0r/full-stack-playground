@@ -2,9 +2,11 @@ import type { Book } from "../types";
 
 interface BooksListProps {
   items: Book[];
+  selectedIds: number[];
+  onBookSelect: (checked: boolean, bookId: number) => void;
 }
 
-function BooksList({ items }: BooksListProps) {
+function BooksList({ items, selectedIds, onBookSelect }: BooksListProps) {
   if (items.length === 0) {
     <div className="text-center">No books to display</div>;
   }
@@ -15,6 +17,7 @@ function BooksList({ items }: BooksListProps) {
         <table className="table table-hover">
           <thead className="table-dark">
             <tr>
+              <th scope="col"></th>
               <th scope="col">ID</th>
               <th scope="col">Title</th>
               <th scope="col">Author</th>
@@ -24,7 +27,16 @@ function BooksList({ items }: BooksListProps) {
           </thead>
           <tbody>
             {items.map((book) => (
-              <tr key={book.id}>
+              <tr
+                key={book.id}
+                className={selectedIds.includes(book.id) ? "table-active" : ""}
+              >
+                <td>
+                  <input
+                    type="checkbox"
+                    onChange={(e) => onBookSelect(e.target.checked, book.id)}
+                  ></input>
+                </td>
                 <td>{book.id}</td>
                 <td>{book.title}</td>
                 <td>{book.author}</td>
