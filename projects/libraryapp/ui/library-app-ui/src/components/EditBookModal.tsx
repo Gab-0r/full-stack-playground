@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { Book } from "../types";
 import { Modal, Button } from "react-bootstrap";
 
@@ -6,19 +6,21 @@ interface EditBookModalProps {
   show: boolean;
   onClose: () => void;
   onSave: (book: Book) => void;
+  book: Book | null;
 }
 
-function EditBookModal({ show, onClose, onSave }: EditBookModalProps) {
-  const [title, setTitle] = useState("");
+function EditBookModal({ show, onClose, onSave, book }: EditBookModalProps) {
+  const [id, setId] = useState<number>(book?.id || 0);
+  const [title, setTitle] = useState(book?.title || "");
   const [titleError, setTitleError] = useState("");
-  const [author, setAuthor] = useState("");
+  const [author, setAuthor] = useState(book?.author || "");
   const [authorError, setAuthorError] = useState("");
-  const [isbn, setIsbn] = useState("");
-  const [publicationYear, setPublicationyear] = useState("");
+  const [isbn, setIsbn] = useState(book?.isbn || "");
+  const [publicationYear, setPublicationyear] = useState(
+    book?.publicationYear || "",
+  );
 
   const handleSave = (): void => {
-    console.log("Book Title: " + title);
-    console.log("Author Title: " + author);
     if (title === "") {
       setTitleError("Book title is required.");
     } else {
@@ -29,9 +31,19 @@ function EditBookModal({ show, onClose, onSave }: EditBookModalProps) {
     } else {
       setAuthorError("");
     }
-    //const book: Book = { title, author, isbn, publicationYear };
-    //onSave(book);
+    const editedBook: Book = { id, title, author, isbn, publicationYear };
+    onSave(editedBook);
   };
+
+  useEffect(() => {
+    if (book) {
+      setId(book.id);
+      setTitle(book.title);
+      setAuthor(book.author);
+      setIsbn(book.isbn || "");
+      setPublicationyear(book.publicationYear || "");
+    }
+  }, [book]);
 
   return (
     <Modal show={show} onHide={onClose} backdrop="static">

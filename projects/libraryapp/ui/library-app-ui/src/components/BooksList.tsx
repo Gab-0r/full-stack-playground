@@ -34,6 +34,7 @@ function BooksList({ items, selectedIds, onBookSelect }: BooksListProps) {
                 <td>
                   <input
                     type="checkbox"
+                    checked={selectedIds.includes(book.id)}
                     onChange={(e) => onBookSelect(e.target.checked, book.id)}
                   ></input>
                 </td>

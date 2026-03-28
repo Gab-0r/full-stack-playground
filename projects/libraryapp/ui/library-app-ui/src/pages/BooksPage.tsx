@@ -15,6 +15,7 @@ function BooksPage() {
   const [showErrorBookAlert, setShowErrordBookAlert] = useState(false);
   const [selectedBooks, setSelectedBooks] = useState<number[]>([]);
   const [showEditBookModal, setShowEditBookModal] = useState(false);
+  const [bookToEdit, setBookToEdit] = useState<Book | null>(null);
 
   const newBookHandle = (): void => {
     setShowNewBookModal(true);
@@ -56,9 +57,9 @@ function BooksPage() {
     fetchBooks();
   };
 
-  const editBookHandle = (): void => {
+  const editBookHandle = async (): Promise<void> => {
     setShowEditBookModal(true);
-    console.log("showing modal " + showEditBookModal);
+    fetchBookToEdit(selectedBooks[0]);
   };
 
   const onBookSelect = (checked: boolean, bookId: number): void => {
@@ -83,9 +84,31 @@ function BooksPage() {
     setItems(data);
   };
 
+  const fetchBookToEdit = async (bookId: number): Promise<void> => {
+    const url = `${base_url}/api/books/${bookId}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    setBookToEdit(data);
+  };
+
   useEffect(() => {
     fetchBooks();
   }, []);
+
+  const onEditBook = async (editedBook: Book): Promise<void> => {
+    const url = `${base_url}/api/books/${editedBook.id}`;
+    const response = await fetch(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(editedBook),
+    });
+    const data = await response.json();
+    setShowEditBookModal(false);
+    setSelectedBooks([]);
+    fetchBooks();
+  };
 
   return (
     <>
@@ -131,7 +154,8 @@ function BooksPage() {
         <EditBookModal
           show={showEditBookModal}
           onClose={() => setShowEditBookModal(false)}
-          onSave={() => console.log("saving...")}
+          onSave={onEditBook}
+          book={bookToEdit}
         />
       </div>
     </>

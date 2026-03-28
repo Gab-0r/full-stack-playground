@@ -42,7 +42,7 @@ public class BookService {
             existing.setAuthor(book.getAuthor());
             existing.setIsbn(book.getIsbn());
             existing.setPublicationYear(book.getPublicationYear());
-            return existing;
+            return repository.save(existing);
         }).orElseThrow(() -> new RuntimeException("Book not found"));
     }
 
