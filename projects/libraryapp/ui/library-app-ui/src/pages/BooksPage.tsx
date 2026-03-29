@@ -97,14 +97,13 @@ function BooksPage() {
 
   const onEditBook = async (editedBook: Book): Promise<void> => {
     const url = `${base_url}/api/books/${editedBook.id}`;
-    const response = await fetch(url, {
+    await fetch(url, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(editedBook),
     });
-    const data = await response.json();
     setShowEditBookModal(false);
     setSelectedBooks([]);
     fetchBooks();
