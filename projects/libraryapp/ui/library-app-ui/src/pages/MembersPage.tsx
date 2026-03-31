@@ -41,7 +41,19 @@ export default function MembersPage() {
 
   const onEditMemberClick = (): void => {};
 
-  const onDeleteMemberClick = (): void => {};
+  const onDeleteMemberClick = async (
+    selectedMembers: number[],
+  ): Promise<void> => {
+    await Promise.all(
+      selectedMembers.map((id) =>
+        fetch(`${base_url}/api/members/${id}`, {
+          method: "DELETE",
+        }),
+      ),
+    );
+    setSelectedMembers([]);
+    fetchMembers();
+  };
 
   const onSaveNewMember = async (
     memberName: string,
@@ -94,7 +106,7 @@ export default function MembersPage() {
           Edit member
         </Button>
         <Button
-          onClick={onDeleteMemberClick}
+          onClick={() => onDeleteMemberClick(selectedMembers)}
           color="danger"
           enable={selectedMembers.length === 0 ? "disabled" : ""}
         >
