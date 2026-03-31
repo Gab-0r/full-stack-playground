@@ -44,11 +44,10 @@ function EditBookModal({ show, onClose, onSave, book }: EditBookModalProps) {
       setPublicationyear(book.publicationYear || "");
     }
   }, [book]);
-
   return (
     <Modal show={show} onHide={onClose} backdrop="static">
       <Modal.Header closeButton>
-        <Modal.Title>New Book</Modal.Title>
+        <Modal.Title>Edit Book</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <form>

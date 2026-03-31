@@ -4,6 +4,7 @@ import MembersList from "../components/MembersList";
 import Button from "../components/Button";
 import NewMemberModal from "../components/NewMemberModal";
 import Alert from "../components/Alert";
+import EditMemberModal from "../components/EditMemberModal";
 
 const base_url = `${import.meta.env.VITE_API_BASE_URL}`;
 
@@ -13,6 +14,8 @@ export default function MembersPage() {
   const [showNewMemberModal, setShowNewMemberModal] = useState(false);
   const [showNewMemberAlert, setShowNewMemberAlert] = useState(false);
   const [showMemberErrorAlert, setShowMemberErrorAlert] = useState(false);
+  const [memberToEdit, setMemberToEdit] = useState<Member | null>(null);
+  const [showEditMemberModal, setShowEditMemberModal] = useState(false);
 
   const fetchMembers = async () => {
     const url = `${base_url}/api/members`;
@@ -39,7 +42,30 @@ export default function MembersPage() {
     setShowNewMemberModal(true);
   };
 
-  const onEditMemberClick = (): void => {};
+  const onEditMemberClick = async (): Promise<void> => {
+    setShowEditMemberModal(true);
+    fetchMemberToEdit(selectedMembers[0]);
+  };
+
+  const fetchMemberToEdit = async (memberId: number): Promise<void> => {
+    const url = `${base_url}/api/members/${memberId}`;
+    const response = await fetch(url);
+    setMemberToEdit(await response.json());
+  };
+
+  const onEditMember = async (editedMember: Member): Promise<void> => {
+    const url = `${base_url}/api/members/${editedMember.id}`;
+    await fetch(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(editedMember),
+    });
+    setShowEditMemberModal(false);
+    setSelectedMembers([]);
+    fetchMembers();
+  };
 
   const onDeleteMemberClick = async (
     selectedMembers: number[],
@@ -121,6 +147,12 @@ export default function MembersPage() {
           show={showNewMemberModal}
           onSave={onSaveNewMember}
           onClose={() => setShowNewMemberModal(false)}
+        />
+        <EditMemberModal
+          show={showEditMemberModal}
+          onSave={onEditMember}
+          onClose={() => setShowEditMemberModal(false)}
+          member={memberToEdit}
         />
       </div>
     </>
