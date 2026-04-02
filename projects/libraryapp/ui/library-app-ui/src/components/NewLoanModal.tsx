@@ -45,15 +45,18 @@ function NewLoanModal({ show, onClose, onSave }: NewLoanModalProps) {
   };
 
   const saveHandler = (): void => {
-    if (memberId === "") {
-      setMemberErrorMsg("Member is required.");
-    } else {
-      setBookErrorMsg("");
-    }
-    if (bookId == "") {
-      setBookErrorMsg("Book is required.");
-    } else {
-      setBookErrorMsg("");
+    if (memberId === "" || bookId === "") {
+      if (memberId === "") {
+        setMemberErrorMsg("Member is required.");
+      } else {
+        setMemberErrorMsg("");
+      }
+      if (bookId == "") {
+        setBookErrorMsg("Book is required.");
+      } else {
+        setBookErrorMsg("");
+      }
+      return;
     }
 
     onSave(Number(memberId), Number(bookId));
@@ -110,14 +113,14 @@ function NewLoanModal({ show, onClose, onSave }: NewLoanModalProps) {
         {memberDetails && (
           <div>
             <h4>New Loan Details</h4>
-            <p>{"Member Id: " + memberDetails?.id}</p>
-            <p>{"Member Name: " + memberDetails?.name}</p>
+            <p>{"Member Id: " + memberDetails.id}</p>
+            <p>{"Member Name: " + memberDetails.name}</p>
           </div>
         )}
         {bookDetails && (
           <div>
-            <p>{"Book ID: " + bookDetails?.id}</p>
-            <p>{"Book title: " + bookDetails?.title}</p>
+            <p>{"Book ID: " + bookDetails.id}</p>
+            <p>{"Book title: " + bookDetails.title}</p>
           </div>
         )}
       </Modal.Body>
