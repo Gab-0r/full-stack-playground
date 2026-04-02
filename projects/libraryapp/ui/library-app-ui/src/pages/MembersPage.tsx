@@ -44,13 +44,14 @@ export default function MembersPage() {
 
   const onEditMemberClick = async (): Promise<void> => {
     setShowEditMemberModal(true);
-    fetchMemberToEdit(selectedMembers[0]);
+    await fetchMemberToEdit(selectedMembers[0]);
   };
 
   const fetchMemberToEdit = async (memberId: number): Promise<void> => {
     const url = `${base_url}/api/members/${memberId}`;
     const response = await fetch(url);
-    setMemberToEdit(await response.json());
+    const data = await response.json();
+    setMemberToEdit(data);
   };
 
   const onEditMember = async (editedMember: Member): Promise<void> => {
