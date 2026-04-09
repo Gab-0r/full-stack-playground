@@ -3,6 +3,7 @@ import os
 from playwright.sync_api import Playwright
 from clients.members_client import MembersClient
 from clients.books_client import BooksClient
+from clients.loans_client import LoansClient
 
 
 @pytest.fixture(scope="session")
@@ -31,3 +32,8 @@ def members_client(api_context) -> MembersClient:
 @pytest.fixture(scope="function")
 def books_client(api_context) -> BooksClient:
     return BooksClient(api_context)
+
+
+@pytest.fixture(scope="function")
+def loans_client(api_context) -> LoansClient:
+    return LoansClient(api_context)
