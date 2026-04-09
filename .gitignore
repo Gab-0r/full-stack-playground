@@ -5,3 +5,4 @@ reports
 .env.test
 __pycache__
 .pytest_cache
+projects/libraryapp/tests/api-pwg-pytest/.env

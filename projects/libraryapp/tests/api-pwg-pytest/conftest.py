@@ -2,6 +2,7 @@ import pytest
 import os
 from playwright.sync_api import Playwright
 from clients.members_client import MembersClient
+from clients.books_client import BooksClient
 
 
 @pytest.fixture(scope="session")
@@ -25,3 +26,8 @@ def api_context(playwright: Playwright, base_url):
 @pytest.fixture(scope="function")
 def members_client(api_context) -> MembersClient:
     return MembersClient(api_context)
+
+
+@pytest.fixture(scope="function")
+def books_client(api_context) -> BooksClient:
+    return BooksClient(api_context)
